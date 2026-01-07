@@ -209,31 +209,31 @@ const AgentSection: React.FC = () => {
   };
 
   return (
-    <section id="agent" className="py-24 px-4 bg-brand-cream/10 relative overflow-hidden">
+    <section id="agent" className="py-12 md:py-24 px-4 bg-brand-cream/10 relative overflow-hidden">
        {/* Decorative BG */}
        <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-brand-orange/20 via-transparent to-transparent pointer-events-none" />
 
       <div className="container mx-auto max-w-4xl relative z-10">
         
         {/* Header */}
-        <div className="text-center mb-8">
+        <div className="text-center mb-6 md:mb-8">
             <div className="inline-block relative">
-                 <img src="https://pbs.twimg.com/profile_images/2008817315454828545/KRRwxMEY_400x400.jpg" alt="Agent" className="w-20 h-20 rounded-full border-4 border-brand-cream shadow-lg mx-auto mb-4" />
-                 <div className="absolute -bottom-1 -right-1 bg-green-500 w-6 h-6 rounded-full border-2 border-brand-orange animate-pulse"></div>
+                 <img src="https://pbs.twimg.com/profile_images/2008817315454828545/KRRwxMEY_400x400.jpg" alt="Agent" className="w-16 h-16 md:w-20 md:h-20 rounded-full border-4 border-brand-cream shadow-lg mx-auto mb-4" />
+                 <div className="absolute -bottom-1 -right-1 bg-green-500 w-5 h-5 md:w-6 md:h-6 rounded-full border-2 border-brand-orange animate-pulse"></div>
             </div>
-            <h2 className="font-slab text-4xl text-brand-cream mb-2">Butthole Agent <span className="text-xl font-sans font-normal opacity-70">by Claude</span></h2>
-            <p className="font-mono text-brand-cream/70 text-sm md:text-base max-w-xl mx-auto">
-                Advanced LLM capable of complex reasoning, crypto analysis, and high-fidelity image generation.
+            <h2 className="font-slab text-3xl md:text-4xl text-brand-cream mb-2">Butthole Agent <span className="block md:inline text-lg md:text-xl font-sans font-normal opacity-70">by Claude</span></h2>
+            <p className="font-mono text-brand-cream/70 text-xs md:text-base max-w-xl mx-auto px-2">
+                Advanced LLM capable of complex reasoning and image generation.
             </p>
         </div>
 
         {/* Chat Interface */}
-        <div className="bg-black/30 backdrop-blur-md border border-brand-cream/20 rounded-3xl overflow-hidden shadow-2xl flex flex-col h-[600px]">
+        <div className="bg-black/30 backdrop-blur-md border border-brand-cream/20 rounded-3xl overflow-hidden shadow-2xl flex flex-col h-[500px] md:h-[600px]">
             
             {/* Messages Area */}
             <div 
                 ref={scrollAreaRef} 
-                className="flex-1 overflow-y-auto p-6 space-y-6 scroll-smooth"
+                className="flex-1 overflow-y-auto p-4 md:p-6 space-y-4 md:space-y-6 scroll-smooth"
             >
                 <AnimatePresence>
                     {messages.map((msg) => (
@@ -241,15 +241,15 @@ const AgentSection: React.FC = () => {
                             key={msg.id}
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className={`flex gap-4 ${msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}
+                            className={`flex gap-2 md:gap-4 ${msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}
                         >
                             {/* Avatar */}
-                            <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${msg.role === 'user' ? 'bg-brand-cream text-brand-orange' : 'bg-brand-orange text-brand-cream'}`}>
-                                {msg.role === 'user' ? <User size={20} /> : <img src="https://pbs.twimg.com/profile_images/2008817315454828545/KRRwxMEY_400x400.jpg" className="w-full h-full rounded-full" />}
+                            <div className={`w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center flex-shrink-0 ${msg.role === 'user' ? 'bg-brand-cream text-brand-orange' : 'bg-brand-orange text-brand-cream'}`}>
+                                {msg.role === 'user' ? <User size={16} className="md:w-5 md:h-5" /> : <img src="https://pbs.twimg.com/profile_images/2008817315454828545/KRRwxMEY_400x400.jpg" className="w-full h-full rounded-full" />}
                             </div>
 
                             {/* Bubble */}
-                            <div className={`max-w-[80%] rounded-2xl p-4 shadow-md ${
+                            <div className={`max-w-[85%] md:max-w-[80%] rounded-2xl p-3 md:p-4 shadow-md text-sm md:text-base ${
                                 msg.role === 'user' 
                                 ? 'bg-brand-cream text-brand-orange rounded-tr-none' 
                                 : 'bg-brand-orange/90 text-white rounded-tl-none font-zilla'
@@ -269,40 +269,42 @@ const AgentSection: React.FC = () => {
                 
                 {isLoading && (
                     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex gap-4">
-                        <div className="w-10 h-10 rounded-full bg-brand-orange text-brand-cream flex items-center justify-center overflow-hidden">
+                        <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-brand-orange text-brand-cream flex items-center justify-center overflow-hidden">
                              <img src="https://pbs.twimg.com/profile_images/2008817315454828545/KRRwxMEY_400x400.jpg" className="w-full h-full" />
                         </div>
-                        <div className="bg-brand-orange/50 p-4 rounded-2xl rounded-tl-none flex items-center gap-2">
-                            <Loader2 className="animate-spin text-brand-cream" size={20} />
-                            <span className="text-brand-cream text-sm font-mono">Thinking...</span>
+                        <div className="bg-brand-orange/50 p-3 md:p-4 rounded-2xl rounded-tl-none flex items-center gap-2">
+                            <Loader2 className="animate-spin text-brand-cream" size={16} />
+                            <span className="text-brand-cream text-xs md:text-sm font-mono">Thinking...</span>
                         </div>
                     </motion.div>
                 )}
             </div>
 
             {/* Input Area */}
-            <div className="p-4 bg-black/40 border-t border-brand-cream/10 z-20">
+            <div className="p-3 md:p-4 bg-black/40 border-t border-brand-cream/10 z-20">
                 {/* Mode Selector & Image Preview */}
-                <div className="flex items-center justify-between mb-3 px-2">
+                <div className="flex flex-wrap items-center justify-between gap-2 mb-2 md:mb-3 px-1">
                      <div className="flex gap-2 bg-black/20 p-1 rounded-lg">
                         <button 
+                            type="button"
                             onClick={() => setMode('chat')}
-                            className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-bold transition-all ${mode === 'chat' ? 'bg-brand-orange text-white shadow-md' : 'text-brand-cream/60 hover:text-brand-cream'}`}
+                            className={`flex items-center gap-1 md:gap-2 px-2 md:px-3 py-1 md:py-1.5 rounded-md text-xs md:text-sm font-bold transition-all ${mode === 'chat' ? 'bg-brand-orange text-white shadow-md' : 'text-brand-cream/60 hover:text-brand-cream'}`}
                         >
-                            <BrainCircuit size={16} /> Chat
+                            <BrainCircuit size={14} className="md:w-4 md:h-4" /> Chat
                         </button>
                         <button 
+                            type="button"
                             onClick={() => setMode('image')}
-                            className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-bold transition-all ${mode === 'image' ? 'bg-brand-green text-brand-orange shadow-md' : 'text-brand-cream/60 hover:text-brand-cream'}`}
+                            className={`flex items-center gap-1 md:gap-2 px-2 md:px-3 py-1 md:py-1.5 rounded-md text-xs md:text-sm font-bold transition-all ${mode === 'image' ? 'bg-brand-green text-brand-orange shadow-md' : 'text-brand-cream/60 hover:text-brand-cream'}`}
                         >
-                            <Sparkles size={16} /> Generate
+                            <Sparkles size={14} className="md:w-4 md:h-4" /> Gen
                         </button>
                      </div>
 
                      {selectedImage && (
-                         <div className="flex items-center gap-2 bg-brand-cream/10 px-3 py-1 rounded-full border border-brand-cream/20">
-                             <span className="text-xs text-brand-cream truncate max-w-[100px]">Image attached</span>
-                             <button onClick={clearImage} className="text-brand-cream hover:text-red-400"><X size={14}/></button>
+                         <div className="flex items-center gap-2 bg-brand-cream/10 px-2 md:px-3 py-1 rounded-full border border-brand-cream/20 max-w-[150px]">
+                             <span className="text-[10px] md:text-xs text-brand-cream truncate">Img attached</span>
+                             <button onClick={clearImage} className="text-brand-cream hover:text-red-400"><X size={12}/></button>
                          </div>
                      )}
                 </div>
@@ -320,27 +322,27 @@ const AgentSection: React.FC = () => {
                     <button 
                         type="button" 
                         onClick={() => fileInputRef.current?.click()}
-                        className={`p-3 rounded-xl transition-all ${mode === 'image' || selectedImage ? 'bg-brand-green text-brand-orange' : 'bg-brand-cream/10 text-brand-cream hover:bg-brand-cream/20'}`}
+                        className={`p-2 md:p-3 rounded-xl transition-all flex-shrink-0 ${mode === 'image' || selectedImage ? 'bg-brand-green text-brand-orange' : 'bg-brand-cream/10 text-brand-cream hover:bg-brand-cream/20'}`}
                         title="Upload reference image"
                     >
-                        <ImageIcon size={20} />
+                        <ImageIcon size={18} className="md:w-5 md:h-5" />
                     </button>
 
                     <input 
                         type="text" 
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
-                        placeholder={mode === 'chat' ? "Ask me anything about the universe or crypto..." : "Describe an image to generate..."}
-                        className="flex-1 bg-brand-cream/5 border border-brand-cream/10 rounded-xl px-4 py-3 text-brand-cream placeholder-brand-cream/30 focus:outline-none focus:border-brand-orange transition-colors"
+                        placeholder={mode === 'chat' ? "Ask anything..." : "Describe image..."}
+                        className="flex-1 bg-brand-cream/5 border border-brand-cream/10 rounded-xl px-3 md:px-4 py-2 md:py-3 text-sm md:text-base text-brand-cream placeholder-brand-cream/30 focus:outline-none focus:border-brand-orange transition-colors min-w-0"
                         disabled={isLoading}
                     />
 
                     <button 
                         type="submit" 
                         disabled={isLoading || (!input.trim() && !selectedImage)}
-                        className="bg-brand-cream text-brand-orange p-3 rounded-xl hover:scale-105 active:scale-95 disabled:opacity-50 disabled:scale-100 transition-all font-bold"
+                        className="bg-brand-cream text-brand-orange p-2 md:p-3 rounded-xl hover:scale-105 active:scale-95 disabled:opacity-50 disabled:scale-100 transition-all font-bold flex-shrink-0"
                     >
-                        <Send size={20} />
+                        <Send size={18} className="md:w-5 md:h-5" />
                     </button>
                 </form>
             </div>
