@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, Image as ImageIcon, X, Bot, User, Loader2, Sparkles, BrainCircuit } from 'lucide-react';
+import { Send, Image as ImageIcon, X, User, Loader2, Sparkles, BrainCircuit } from 'lucide-react';
 import { GoogleGenAI } from "@google/genai";
 
 interface Message {
@@ -114,11 +114,14 @@ const AgentSection: React.FC = () => {
 
         const result = await chat.sendMessage({ message: input });
         
+        // Strict type handling for result.text
+        const responseText: string = result.text ?? "I'm thinking... but nothing came out.";
+
         setMessages(prev => [...prev, {
           id: (Date.now() + 1).toString(),
           role: 'model',
           type: 'text',
-          content: result.text || "I'm thinking... but nothing came out."
+          content: responseText
         }]);
 
       } else {
@@ -144,9 +147,6 @@ const AgentSection: React.FC = () => {
         });
 
         // Handle response
-        // Note: Real image generation models return inlineData. 
-        // If standard LLM is used, it returns text description. 
-        // For this demo, we handle the text response gracefully if image fails.
         let foundImage = false;
         
         if (response.candidates?.[0]?.content?.parts) {
@@ -161,11 +161,13 @@ const AgentSection: React.FC = () => {
                     }]);
                     foundImage = true;
                 } else if (part.text) {
+                     // Strict type assertion for part.text
+                     const textContent: string = part.text;
                      setMessages(prev => [...prev, {
                         id: (Date.now() + 2).toString(),
                         role: 'model',
                         type: 'text',
-                        content: part.text
+                        content: textContent
                     }]);
                 }
             }
