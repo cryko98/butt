@@ -3,6 +3,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Send, Image as ImageIcon, X, User, Loader2, Sparkles, BrainCircuit } from 'lucide-react';
 import { GoogleGenAI } from "@google/genai";
 
+// Declare process for TypeScript to accept the injected variable
+declare var process: {
+  env: {
+    API_KEY: string;
+  }
+};
+
 interface Message {
   id: string;
   role: 'user' | 'model';
@@ -23,13 +30,16 @@ const AgentSection: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [mode, setMode] = useState<'chat' | 'image'>('chat');
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  
+  // Ref for the scrollable container instead of a dummy div
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Initialize AI client only when needed or on mount, safely
   const aiClient = useMemo(() => {
     try {
-        const key = (window as any).process?.env?.API_KEY || '';
+        // process.env.API_KEY is injected by Vite config
+        const key = process.env.API_KEY;
         if (!key) return null;
         return new GoogleGenAI({ apiKey: key });
     } catch (e) {
@@ -38,9 +48,16 @@ const AgentSection: React.FC = () => {
     }
   }, []);
 
-  // Auto-scroll to bottom
+  // Auto-scroll to bottom of the CONTAINER only, preventing page jumps
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (scrollAreaRef.current) {
+      const scrollContainer = scrollAreaRef.current;
+      // Smooth scroll inside the container
+      scrollContainer.scrollTo({
+        top: scrollContainer.scrollHeight,
+        behavior: 'smooth'
+      });
+    }
   }, [messages]);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -71,7 +88,7 @@ const AgentSection: React.FC = () => {
         id: Date.now().toString(),
         role: 'model',
         type: 'text',
-        content: "Error: API_KEY is missing. Please configure 'API_KEY' in your Environment Variables."
+        content: "Error: API_KEY is missing. Please check your configuration."
       }]);
       return;
     }
@@ -105,7 +122,7 @@ const AgentSection: React.FC = () => {
             }));
 
         const chat = aiClient.chats.create({
-          model: 'gemini-2.0-flash-exp', // Falling back to a stable model for preview if 3-pro is restricted
+          model: 'gemini-3-pro-preview', 
           config: {
             systemInstruction: "You are the Butthole Agent, a highly intelligent AI created by Claude Meta. You represent the $BUTTHOLE coin. You are extremely smart, capable of discussing complex scientific topics, crypto markets, and philosophy, but you maintain a slightly cheeky, memetic, 'butthole' centric personality. You are helpful and precise.",
           },
@@ -142,7 +159,7 @@ const AgentSection: React.FC = () => {
         }
 
         const response = await aiClient.models.generateContent({
-          model: 'gemini-2.0-flash-exp', // Using flash-exp as it often supports multimodal well in preview
+          model: 'gemini-2.5-flash-image',
           contents: { parts },
         });
 
@@ -214,7 +231,10 @@ const AgentSection: React.FC = () => {
         <div className="bg-black/30 backdrop-blur-md border border-brand-cream/20 rounded-3xl overflow-hidden shadow-2xl flex flex-col h-[600px]">
             
             {/* Messages Area */}
-            <div className="flex-1 overflow-y-auto p-6 space-y-6">
+            <div 
+                ref={scrollAreaRef} 
+                className="flex-1 overflow-y-auto p-6 space-y-6 scroll-smooth"
+            >
                 <AnimatePresence>
                     {messages.map((msg) => (
                         <motion.div 
@@ -258,11 +278,10 @@ const AgentSection: React.FC = () => {
                         </div>
                     </motion.div>
                 )}
-                <div ref={messagesEndRef} />
             </div>
 
             {/* Input Area */}
-            <div className="p-4 bg-black/40 border-t border-brand-cream/10">
+            <div className="p-4 bg-black/40 border-t border-brand-cream/10 z-20">
                 {/* Mode Selector & Image Preview */}
                 <div className="flex items-center justify-between mb-3 px-2">
                      <div className="flex gap-2 bg-black/20 p-1 rounded-lg">
