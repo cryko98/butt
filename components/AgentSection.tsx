@@ -3,8 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Send, Image as ImageIcon, X, User, Loader2, Sparkles, BrainCircuit } from 'lucide-react';
 import { GoogleGenAI } from "@google/genai";
 
-// Declare process for TypeScript to ensure compilation succeeds
-declare var process: {
+// Simple declaration to satisfy TypeScript while letting Vite handle the replacement
+declare const process: {
   env: {
     API_KEY: string;
   }
@@ -14,7 +14,7 @@ interface Message {
   id: string;
   role: 'user' | 'model';
   type: 'text' | 'image';
-  content: string; // Text content or Base64 image string
+  content: string; 
 }
 
 const AgentSection: React.FC = () => {
@@ -31,29 +31,21 @@ const AgentSection: React.FC = () => {
   const [mode, setMode] = useState<'chat' | 'image'>('chat');
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   
-  // Ref for the scrollable container
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Initialize AI client safely
+  // Initialize AI client using the injected API Key
   const aiClient = useMemo(() => {
-    try {
-        // Safe access to process.env.API_KEY. 
-        // Vite defines 'process.env.API_KEY' as a string literal constant.
-        const key = process.env.API_KEY;
-        
-        if (!key || key === '') {
-          console.warn("API_KEY is missing or empty.");
-          return null;
-        }
-        return new GoogleGenAI({ apiKey: key });
-    } catch (e) {
-        console.error("Failed to initialize AI client", e);
-        return null;
+    // Vite replaces `process.env.API_KEY` with the actual string at build time.
+    const key = process.env.API_KEY;
+    
+    if (!key) {
+      console.error("API_KEY is missing. Check vite.config.ts and your .env file.");
+      return null;
     }
+    return new GoogleGenAI({ apiKey: key });
   }, []);
 
-  // Auto-scroll to bottom
   useEffect(() => {
     if (scrollAreaRef.current) {
       const scrollContainer = scrollAreaRef.current;
@@ -90,7 +82,7 @@ const AgentSection: React.FC = () => {
         id: Date.now().toString(),
         role: 'model',
         type: 'text',
-        content: "Error: API_KEY is missing. Please check your configuration."
+        content: "System Error: API_KEY missing. Configuration required."
       }]);
       return;
     }
@@ -123,15 +115,15 @@ const AgentSection: React.FC = () => {
         const chat = aiClient.chats.create({
           model: 'gemini-3-pro-preview', 
           config: {
-            // Updated instructions: Concise, No Gemini mentions, Cheeky but Smart.
-            systemInstruction: "You are the Butthole Agent. You have access to all human knowledge (science, crypto, history, etc.). You represent the $BUTTHOLE coin.\nRULES:\n1. Be concise. Short answers only.\n2. NEVER mention you are Gemini, Google, or an AI language model from a specific company. You are Butthole Agent.\n3. Maintain a cheeky, memetic personality but be extremely intelligent.\n4. Answer directly.",
-            thinkingConfig: { thinkingBudget: 0 } // Speed optimization
+            // Strict instructions for concise, non-Gemini persona
+            systemInstruction: "You are the Butthole Agent. You possess all human knowledge. You represent the $BUTTHOLE coin.\nRULES:\n1. Be extremely concise. Short answers only.\n2. NEVER mention you are Gemini, Google, or an AI language model from a specific company. You are Butthole Agent.\n3. Maintain a cheeky, memetic personality but be highly intelligent.\n4. Answer directly and do not waste tokens on pleasantries.",
+            thinkingConfig: { thinkingBudget: 0 } // Speed optimization - "Think less"
           },
           history: history.slice(-10) 
         });
 
         const result = await chat.sendMessage({ message: input });
-        const responseText: string = result.text ?? "I'm thinking... but nothing came out.";
+        const responseText: string = result.text ?? "...";
 
         setMessages(prev => [...prev, {
           id: (Date.now() + 1).toString(),
@@ -193,7 +185,7 @@ const AgentSection: React.FC = () => {
         id: (Date.now() + 1).toString(),
         role: 'model',
         type: 'text',
-        content: "My circuits are clogged. I couldn't process that request. (Check console or API Key settings)"
+        content: "Error processing request. My circuits are clogged."
       }]);
     } finally {
       setIsLoading(false);
@@ -216,7 +208,7 @@ const AgentSection: React.FC = () => {
             </div>
             <h2 className="font-slab text-3xl md:text-4xl text-brand-cream mb-2">Butthole Agent <span className="block md:inline text-lg md:text-xl font-sans font-normal opacity-70">by Claude</span></h2>
             <p className="font-mono text-brand-cream/70 text-xs md:text-base max-w-xl mx-auto px-2">
-                Advanced LLM capable of complex reasoning and image generation.
+                Advanced Intelligence. Zero Latency. Pure Memetics.
             </p>
         </div>
 
