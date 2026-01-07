@@ -104,20 +104,21 @@ const AgentSection: React.FC = () => {
 
     try {
       if (mode === 'chat') {
-        // --- TEXT CHAT MODE (gemini-3-pro-preview) ---
+        // --- TEXT CHAT MODE (gemini-3-flash-preview) ---
+        // IMPORTANT: Exclude the 'welcome' message from history passed to API.
+        // The API history must start with a USER message, not a MODEL message.
         const history = messages
-            .filter(m => m.type === 'text')
+            .filter(m => m.id !== 'welcome' && m.type === 'text')
             .map(m => ({
                 role: m.role,
                 parts: [{ text: m.content }]
             }));
 
         const chat = aiClient.chats.create({
-          model: 'gemini-3-pro-preview', 
+          model: 'gemini-3-flash-preview', 
           config: {
             // Strict instructions for concise, non-Gemini persona
             systemInstruction: "You are the Butthole Agent. You possess all human knowledge. You represent the $BUTTHOLE coin.\nRULES:\n1. Be extremely concise. Short answers only.\n2. NEVER mention you are Gemini, Google, or an AI language model from a specific company. You are Butthole Agent.\n3. Maintain a cheeky, memetic personality but be highly intelligent.\n4. Answer directly and do not waste tokens on pleasantries.",
-            thinkingConfig: { thinkingBudget: 0 } // Speed optimization - "Think less"
           },
           history: history.slice(-10) 
         });
@@ -179,13 +180,14 @@ const AgentSection: React.FC = () => {
              throw new Error("No image or text generated.");
         }
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
+      const errorMessage = error?.message || "Unknown error";
       setMessages(prev => [...prev, {
         id: (Date.now() + 1).toString(),
         role: 'model',
         type: 'text',
-        content: "Error processing request. My circuits are clogged."
+        content: `Error processing request: ${errorMessage}. (My circuits are clogged)`
       }]);
     } finally {
       setIsLoading(false);
