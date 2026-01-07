@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Send, Image as ImageIcon, X, User, Loader2, Sparkles, BrainCircuit } from 'lucide-react';
 import { GoogleGenAI } from "@google/genai";
 
-// Declare process for TypeScript to accept the injected variable
+// Declare process for TypeScript to ensure compilation succeeds
 declare var process: {
   env: {
     API_KEY: string;
@@ -31,16 +31,21 @@ const AgentSection: React.FC = () => {
   const [mode, setMode] = useState<'chat' | 'image'>('chat');
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   
-  // Ref for the scrollable container instead of a dummy div
+  // Ref for the scrollable container
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Initialize AI client only when needed or on mount, safely
+  // Initialize AI client safely
   const aiClient = useMemo(() => {
     try {
-        // process.env.API_KEY is injected by Vite config
+        // Safe access to process.env.API_KEY. 
+        // Vite defines 'process.env.API_KEY' as a string literal constant.
         const key = process.env.API_KEY;
-        if (!key) return null;
+        
+        if (!key || key === '') {
+          console.warn("API_KEY is missing or empty.");
+          return null;
+        }
         return new GoogleGenAI({ apiKey: key });
     } catch (e) {
         console.error("Failed to initialize AI client", e);
@@ -48,11 +53,10 @@ const AgentSection: React.FC = () => {
     }
   }, []);
 
-  // Auto-scroll to bottom of the CONTAINER only, preventing page jumps
+  // Auto-scroll to bottom
   useEffect(() => {
     if (scrollAreaRef.current) {
       const scrollContainer = scrollAreaRef.current;
-      // Smooth scroll inside the container
       scrollContainer.scrollTo({
         top: scrollContainer.scrollHeight,
         behavior: 'smooth'
@@ -66,7 +70,6 @@ const AgentSection: React.FC = () => {
       const reader = new FileReader();
       reader.onloadend = () => {
         setSelectedImage(reader.result as string);
-        // Automatically switch to image mode if an image is uploaded
         setMode('image');
       };
       reader.readAsDataURL(file);
@@ -82,7 +85,6 @@ const AgentSection: React.FC = () => {
     e.preventDefault();
     if ((!input.trim() && !selectedImage) || isLoading) return;
 
-    // Check for API Key availability
     if (!aiClient) {
       setMessages(prev => [...prev, {
         id: Date.now().toString(),
@@ -94,8 +96,6 @@ const AgentSection: React.FC = () => {
     }
 
     const userMsgId = Date.now().toString();
-    
-    // Add User Message
     const userContent = selectedImage 
       ? (input ? `[Image Uploaded] ${input}` : "[Image Uploaded]") 
       : input;
@@ -113,9 +113,8 @@ const AgentSection: React.FC = () => {
     try {
       if (mode === 'chat') {
         // --- TEXT CHAT MODE (gemini-3-pro-preview) ---
-        // Construct history for context (simplified)
         const history = messages
-            .filter(m => m.type === 'text') // Simplified history filter
+            .filter(m => m.type === 'text')
             .map(m => ({
                 role: m.role,
                 parts: [{ text: m.content }]
@@ -124,15 +123,14 @@ const AgentSection: React.FC = () => {
         const chat = aiClient.chats.create({
           model: 'gemini-3-pro-preview', 
           config: {
-            systemInstruction: "You are the Butthole Agent. You have access to all human knowledge (science, crypto, history, etc.). You represent the $BUTTHOLE coin. \nRULES:\n1. Be concise. Short answers only.\n2. NEVER mention you are Gemini, Google, or an AI language model from a specific company. You are Butthole Agent.\n3. Maintain a cheeky, memetic personality.\n4. Answer directly and do not preach.",
-            thinkingConfig: { thinkingBudget: 0 } // Disable extended thinking for speed
+            // Updated instructions: Concise, No Gemini mentions, Cheeky but Smart.
+            systemInstruction: "You are the Butthole Agent. You have access to all human knowledge (science, crypto, history, etc.). You represent the $BUTTHOLE coin.\nRULES:\n1. Be concise. Short answers only.\n2. NEVER mention you are Gemini, Google, or an AI language model from a specific company. You are Butthole Agent.\n3. Maintain a cheeky, memetic personality but be extremely intelligent.\n4. Answer directly.",
+            thinkingConfig: { thinkingBudget: 0 } // Speed optimization
           },
           history: history.slice(-10) 
         });
 
         const result = await chat.sendMessage({ message: input });
-        
-        // Strict type handling for result.text
         const responseText: string = result.text ?? "I'm thinking... but nothing came out.";
 
         setMessages(prev => [...prev, {
@@ -143,12 +141,9 @@ const AgentSection: React.FC = () => {
         }]);
 
       } else {
-        // --- IMAGE GENERATION/EDIT MODE (gemini-2.5-flash-image) ---
-        // Note: Check model availability in your specific region/key
+        // --- IMAGE GENERATION MODE (gemini-2.5-flash-image) ---
         const parts: any[] = [];
-        
         if (input) parts.push({ text: input });
-        
         if (selectedImage) {
            const base64Data = selectedImage.split(',')[1];
            parts.push({
@@ -164,9 +159,7 @@ const AgentSection: React.FC = () => {
           contents: { parts },
         });
 
-        // Handle response
         let foundImage = false;
-        
         if (response.candidates?.[0]?.content?.parts) {
             for (const part of response.candidates[0].content.parts) {
                 if (part.inlineData) {
@@ -179,7 +172,6 @@ const AgentSection: React.FC = () => {
                     }]);
                     foundImage = true;
                 } else if (part.text) {
-                     // Strict type assertion for part.text
                      const textContent: string = part.text;
                      setMessages(prev => [...prev, {
                         id: (Date.now() + 2).toString(),

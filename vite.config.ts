@@ -14,11 +14,14 @@ export default defineConfig(({ mode }) => {
   // Set the third parameter to '' to load all env regardless of the `VITE_` prefix.
   const env = loadEnv(mode, process.cwd(), '');
   
+  // Prioritize loaded env, then VITE_ prefixed, then system env
+  const apiKey = env.API_KEY || env.VITE_API_KEY || process.env.API_KEY || '';
+
   return {
     plugins: [react()],
     define: {
       // Stringify the API key to ensure it's treated as a string literal in the code
-      'process.env.API_KEY': JSON.stringify(env.API_KEY || env.VITE_API_KEY || ''),
+      'process.env.API_KEY': JSON.stringify(apiKey),
     },
   };
 });
