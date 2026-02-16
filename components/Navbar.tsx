@@ -60,7 +60,7 @@ const Navbar: React.FC = () => {
               </button>
             ))}
             
-            <a href="https://x.com/themoggeronsol" target="_blank" rel="noopener noreferrer" className="text-brand-dark hover:text-brand-blue transition-colors p-2">
+            <a href="https://x.com/i/communities/2023241965891092502" target="_blank" rel="noopener noreferrer" className="text-brand-dark hover:text-brand-blue transition-colors p-2">
                 <XLogo />
             </a>
 
@@ -88,7 +88,7 @@ const Navbar: React.FC = () => {
               <button key={link.id} onClick={() => scrollToSection(link.id)} className="rainbow-text">{link.label}</button>
             ))}
             <div className="flex gap-8 items-center mt-4">
-                <a href="https://x.com/themoggeronsol" target="_blank" rel="noopener noreferrer" className="text-brand-dark">
+                <a href="https://x.com/i/communities/2023241965891092502" target="_blank" rel="noopener noreferrer" className="text-brand-dark">
                     <XLogo />
                 </a>
                 <a href="https://pump.fun/4MdtwK7ezBemvAWsW32HuvVD7o7j89Y3poYwJpWopump" target="_blank" rel="noopener noreferrer" className="bg-brand-blue text-white px-12 py-4 rounded-full shadow-2xl text-xl">

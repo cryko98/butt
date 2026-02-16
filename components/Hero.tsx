@@ -76,7 +76,7 @@ const Hero: React.FC = () => {
             </motion.a>
 
             <motion.a 
-                href="https://x.com/themoggeronsol" 
+                href="https://x.com/i/communities/2023241965891092502" 
                 target="_blank"
                 rel="noreferrer"
                 whileHover={{ scale: 1.05, rotate: -1 }}
