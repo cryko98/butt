@@ -1,17 +1,18 @@
+
 import React from 'react';
 
 const Chart: React.FC = () => {
   return (
-    <section id="chart" className="py-12 md:py-24 px-4 bg-black/5">
+    <section id="chart" className="py-8 md:py-12 px-4 bg-brand-dark">
         <div className="container mx-auto max-w-7xl">
-            <h2 className="font-slab text-4xl md:text-6xl text-brand-cream mb-8 md:mb-12 text-center">
-                Live Chart
+            <h2 className="font-slab text-3xl md:text-5xl text-white mb-6 md:mb-8 text-center">
+                MOG STATS
             </h2>
-            <div className="relative w-full pb-[150%] md:pb-[100%] lg:pb-[65%] rounded-3xl overflow-hidden shadow-2xl border-4 border-brand-cream/20 hover:border-brand-cream transition-colors duration-500">
+            <div className="relative w-full pb-[140%] md:pb-[90%] lg:pb-[60%] rounded-[30px] overflow-hidden shadow-2xl border-4 border-brand-blue/20">
                 <iframe 
-                    src="https://dexscreener.com/solana/ApxGmXS7g6E45ZJ2EpmrXupwCHXKSnmsgk2fJNEDstHM?embed=1&loadChartSettings=0&chartLeftToolbar=0&chartTheme=dark&theme=light&chartStyle=0&chartType=usd&interval=15"
-                    className="absolute top-0 left-0 w-full h-full border-0 bg-[#1A1A1A]"
-                    title="DexScreener Chart"
+                    src="https://dexscreener.com/solana/4MdtwK7ezBemvAWsW32HuvVD7o7j89Y3poYwJpWopump?embed=1&theme=dark&chartTheme=dark&trades=0&info=0"
+                    className="absolute top-0 left-0 w-full h-full border-0 bg-[#0F172A]"
+                    title="MOG Chart"
                     allowFullScreen
                 ></iframe>
             </div>

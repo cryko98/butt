@@ -1,16 +1,16 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>$BUTTHOLE - The Claude Meta Coin</title>
-    <link rel="icon" type="image/jpeg" href="https://pbs.twimg.com/profile_images/2008817315454828545/KRRwxMEY_400x400.jpg" />
+    <title>$MOG - The Official Mog Coin on Solana</title>
+    <link rel="icon" type="image/jpeg" href="https://wkkeyyrknmnynlcefugq.supabase.co/storage/v1/object/public/neww/20260216_073229.jpg" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Zilla+Slab:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- Polyfill for process.env to prevent browser crashes if process is accessed before replacement or if replacement fails -->
     <script>
       if (typeof window !== 'undefined') {
         window.process = window.process || {};
@@ -23,14 +23,31 @@
         theme: {
           extend: {
             colors: {
-              'brand-orange': '#D97757', // Terracotta/Orange from the image
-              'brand-cream': '#FDF6E3',
-              'brand-green': '#A7D129', // Fart green
+              'brand-blue': '#2E90FA',
+              'brand-yellow': '#FFD000',
+              'brand-pink': '#FF00E5',
+              'brand-green': '#00FFA3',
+              'brand-dark': '#0F172A',
             },
             fontFamily: {
               'slab': ['"Alfa Slab One"', 'cursive'],
               'zilla': ['"Zilla Slab"', 'serif'],
               'mono': ['"Courier Prime"', 'monospace'],
+            },
+            animation: {
+              'rainbow': 'rainbow 3s linear infinite',
+              'float': 'float 6s ease-in-out infinite',
+              'spin-slow': 'spin 12s linear infinite',
+            },
+            keyframes: {
+              rainbow: {
+                '0%, 100%': { 'background-position': '0% 50%' },
+                '50%': { 'background-position': '100% 50%' },
+              },
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-20px)' },
+              }
             }
           }
         }
@@ -38,21 +55,43 @@
     </script>
     <style>
       body {
-        background-color: #D97757;
-        color: #FDF6E3;
+        background-color: #FFFFFF;
+        color: #0F172A;
         overflow-x: hidden;
       }
-      /* Custom Scrollbar */
-      ::-webkit-scrollbar {
-        width: 10px;
+      .rainbow-text {
+        background: linear-gradient(to right, #2E90FA, #FFD000, #FF00E5, #00FFA3, #2E90FA);
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: rainbow 3s linear infinite;
       }
-      ::-webkit-scrollbar-track {
-        background: #B55D42;
+      .rainbow-border {
+        position: relative;
+        background: white;
+        background-clip: padding-box;
+        border: solid 4px transparent;
+        border-radius: 2rem;
       }
-      ::-webkit-scrollbar-thumb {
-        background: #FDF6E3;
-        border-radius: 5px;
+      .rainbow-border:before {
+        content: '';
+        position: absolute;
+        top: 0; right: 0; bottom: 0; left: 0;
+        z-index: -1;
+        margin: -4px;
+        border-radius: inherit;
+        background: linear-gradient(to right, #2E90FA, #FFD000, #FF00E5, #00FFA3);
+        background-size: 200% auto;
+        animation: rainbow 3s linear infinite;
       }
+      .glass-card {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+      ::-webkit-scrollbar { width: 10px; }
+      ::-webkit-scrollbar-track { background: #F1F5F9; }
+      ::-webkit-scrollbar-thumb { background: #2E90FA; border-radius: 5px; }
     </style>
   <script type="importmap">
 {

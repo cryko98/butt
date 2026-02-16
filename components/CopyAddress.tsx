@@ -1,8 +1,9 @@
+
 import React, { useState } from 'react';
 import { Copy, Check } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-const CA = "GbuqNYmJGfNTbCM8D4GusJ8qzckZoFroGSXT5yLSpump";
+const CA = "4MdtwK7ezBemvAWsW32HuvVD7o7j89Y3poYwJpWopump";
 
 const CopyAddress: React.FC = () => {
   const [copied, setCopied] = useState(false);
@@ -20,16 +21,16 @@ const CopyAddress: React.FC = () => {
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
     >
-        <div className="bg-black/20 backdrop-blur-sm border-2 border-brand-cream/50 rounded-xl p-4 flex flex-col md:flex-row items-center justify-between gap-4 transition-all group-hover:border-brand-cream group-hover:bg-black/30">
-            <span className="font-mono text-brand-cream/70 text-sm md:text-base font-bold">CA:</span>
-            <code className="font-mono text-xs md:text-lg text-white break-all text-center">
+        <div className="bg-white/50 backdrop-blur-sm border-2 border-brand-blue/30 rounded-2xl p-4 flex flex-col md:flex-row items-center justify-between gap-4 transition-all group-hover:border-brand-blue group-hover:bg-white/80 shadow-sm">
+            <span className="font-mono text-brand-dark/50 text-sm md:text-base font-bold">CA:</span>
+            <code className="font-mono text-xs md:text-lg text-brand-dark break-all text-center font-bold">
                 {CA}
             </code>
-            <div className="bg-brand-cream text-brand-orange p-2 rounded-lg">
+            <div className="bg-brand-blue text-white p-2 rounded-xl">
                 {copied ? <Check size={20} /> : <Copy size={20} />}
             </div>
         </div>
-        <div className="text-center mt-2 text-brand-cream/60 text-sm font-mono opacity-0 group-hover:opacity-100 transition-opacity">
+        <div className="text-center mt-2 text-brand-dark/40 text-sm font-mono opacity-0 group-hover:opacity-100 transition-opacity">
             {copied ? "Copied to clipboard!" : "Click to copy address"}
         </div>
     </motion.div>

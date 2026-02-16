@@ -1,68 +1,51 @@
+
 import React from 'react';
 import { motion } from 'framer-motion';
 
 const Story: React.FC = () => {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, x: -50 },
-    visible: { opacity: 1, x: 0, transition: { type: "spring", stiffness: 100 } }
-  };
-
   return (
-    <section id="story" className="py-12 md:py-24 bg-black/10 relative overflow-hidden">
-      <div className="container mx-auto px-6 max-w-5xl">
-        <motion.h2 
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="font-slab text-4xl md:text-6xl text-brand-cream mb-8 md:mb-12 text-center"
-        >
-            The Origin of Wind
-        </motion.h2>
-
+    <section id="story" className="py-12 md:py-16 bg-white relative overflow-hidden">
+      <div className="container mx-auto px-6 max-w-6xl">
         <motion.div 
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
-            className="space-y-6 md:space-y-8 font-zilla text-lg md:text-3xl leading-relaxed text-brand-cream/90 text-center"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            className="rainbow-border p-1 md:p-1 mb-8 shadow-2xl"
         >
-          <motion.p variants={itemVariants}>
-            Everyone has been talking about the <span className="text-white font-bold bg-brand-orange px-1 whitespace-nowrap">Claude logo</span> and how it looks remarkably like a <span className="font-slab">Butthole</span>.
-          </motion.p>
-          
-          <motion.p variants={itemVariants} className="text-xl md:text-4xl font-bold text-white py-2 md:py-4">
-            They said it’s a logo. The internet said it’s a butthole. 
-          </motion.p>
+            <div className="bg-white rounded-[1.8rem] p-8 md:p-16 text-center">
+                <h2 className="font-slab text-4xl md:text-7xl text-brand-dark mb-8 tracking-tighter">
+                    PEAK <span className="rainbow-text">MOGGING</span>
+                </h2>
+                
+                <div className="space-y-6 font-zilla text-xl md:text-3xl leading-tight text-brand-dark/80 font-bold">
+                    <p>
+                        The ETH chain was too sluggish for the elite. Moggers needed a chain that matched their physique. 
+                    </p>
+                    
+                    <p className="rainbow-text text-3xl md:text-5xl uppercase tracking-tighter font-slab py-4">
+                        Solana is the new gym.
+                    </p>
 
-          <motion.div variants={itemVariants} className="bg-brand-cream text-brand-orange p-4 md:p-6 rounded-2xl rotate-1 mx-auto max-w-3xl shadow-xl transform hover:rotate-0 transition-transform duration-300">
-            Thus… <span className="font-slab text-2xl md:text-4xl">$BUTTHOLE</span> <span className="font-zilla">took over.</span>
-          </motion.div>
+                    <p>
+                        We didn't just move; we evolved. $MOG on Solana is the final form of financial looks-maxxing. 
+                    </p>
 
-          <motion.p variants={itemVariants}>
-             The world wasn't ready for the truth. <br className="hidden md:block"/>
-             Butthole was just a butthole on Raydium and went to 120M. 
-          </motion.p>
+                    <div className="bg-brand-dark text-white p-8 rounded-[2.5rem] shadow-2xl transform hover:scale-105 transition-transform duration-500 my-8">
+                         <span className="font-slab text-brand-yellow text-3xl md:text-5xl block mb-2 italic">"MOG OR BE MOGGED."</span>
+                         <span className="text-lg md:text-xl font-mono opacity-60">There is no middle ground.</span>
+                    </div>
 
-          <motion.p variants={itemVariants} className="border-l-4 border-brand-cream pl-4 md:pl-6 italic text-base md:text-2xl">
-            "This butthole is literally tied to the claude meta which makes it more bullish. 
-            <span className="font-bold text-brand-orange"> $butthole</span> is to Claude what $fartcoin is to Truth Terminal."
-          </motion.p>
-
-          <motion.p variants={itemVariants} className="text-2xl md:text-4xl font-slab mt-8 md:mt-12">
-            That's really easy.
-          </motion.p>
-
+                    <p className="text-lg md:text-2xl text-brand-blue">
+                        While they were building dApps, we were building character. While they were trading charts, we were trading jawlines.
+                    </p>
+                </div>
+            </div>
         </motion.div>
+      </div>
+
+      {/* Decorative large text bg */}
+      <div className="absolute top-1/2 left-0 -translate-y-1/2 -rotate-90 select-none pointer-events-none opacity-[0.03] font-slab text-[20vw] whitespace-nowrap">
+        SUPERIORITY SUPERIORITY SUPERIORITY
       </div>
     </section>
   );
