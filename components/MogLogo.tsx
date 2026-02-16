@@ -63,7 +63,7 @@ const MogLogo: React.FC = () => {
           <div className="absolute -inset-2 bg-gradient-to-r from-brand-pink via-brand-yellow to-brand-blue rounded-full animate-spin-slow delay-500 opacity-40" />
 
           <motion.img 
-            src="https://wkkeyyrknmnynlcefugq.supabase.co/storage/v1/object/public/neww/20260216_073229.jpg"
+            src="https://wkkeyyrknmnynlcefugq.supabase.co/storage/v1/object/public/neww/20260216_121421.jpg"
             alt="Mog Logo"
             className="w-56 h-56 md:w-80 md:h-80 rounded-full shadow-[0_0_80px_rgba(46,144,250,0.5)] border-[12px] border-white relative z-10"
             animate={{ y: [0, -15, 0] }}

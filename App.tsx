@@ -33,7 +33,7 @@ function App() {
         <div className="absolute inset-0 bg-gradient-to-r from-brand-blue/10 via-brand-pink/10 to-brand-green/10 animate-pulse" />
         <div className="container mx-auto px-4 relative z-10">
             <div className="relative inline-block mb-6">
-                 <img src="https://wkkeyyrknmnynlcefugq.supabase.co/storage/v1/object/public/neww/20260216_073229.jpg" className="w-12 h-12 rounded-full mx-auto ring-4 ring-brand-blue" alt="Footer Logo" />
+                 <img src="https://wkkeyyrknmnynlcefugq.supabase.co/storage/v1/object/public/neww/20260216_121421.jpg" className="w-12 h-12 rounded-full mx-auto ring-4 ring-brand-blue" alt="Footer Logo" />
                  <div className="absolute -inset-2 bg-gradient-to-r from-brand-blue to-brand-pink rounded-full blur opacity-50 animate-spin-slow" />
             </div>
             <p className="mb-2 font-bold text-white">$MOG is the culture. The attitude. The peak of Solana.</p>

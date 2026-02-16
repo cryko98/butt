@@ -42,7 +42,7 @@ const Navbar: React.FC = () => {
       <div className="container mx-auto px-4 flex justify-between items-center">
         <div className="flex items-center gap-3 cursor-pointer group" onClick={() => scrollToSection('hero')}>
             <div className="relative">
-                <img src="https://wkkeyyrknmnynlcefugq.supabase.co/storage/v1/object/public/neww/20260216_073229.jpg" alt="Logo" className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-brand-blue group-hover:scale-110 transition-transform" />
+                <img src="https://wkkeyyrknmnynlcefugq.supabase.co/storage/v1/object/public/neww/20260216_121421.jpg" alt="Logo" className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-brand-blue group-hover:scale-110 transition-transform" />
                 <div className="absolute -inset-1 bg-gradient-to-r from-brand-blue via-brand-pink to-brand-green rounded-full blur opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
             <span className="font-slab text-2xl md:text-3xl tracking-tighter rainbow-text">MOG</span>
