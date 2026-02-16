@@ -6,6 +6,10 @@ import CopyAddress from './CopyAddress';
 import { Trophy, Zap } from 'lucide-react';
 
 const Hero: React.FC = () => {
+  const XLogo = () => (
+    <svg viewBox="0 0 24 24" className="w-6 h-6 fill-current"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+  );
+
   return (
     <section id="hero" className="min-h-screen flex flex-col items-center justify-center pt-24 pb-8 px-4 relative overflow-hidden bg-white">
       
@@ -72,14 +76,14 @@ const Hero: React.FC = () => {
             </motion.a>
 
             <motion.a 
-                href="https://twitter.com/i/communities/2023197269697212532" 
+                href="https://x.com/themoggeronsol" 
                 target="_blank"
                 rel="noreferrer"
                 whileHover={{ scale: 1.05, rotate: -1 }}
                 whileTap={{ scale: 0.95 }}
                 className="bg-brand-dark text-white px-8 py-4 rounded-[2rem] font-slab text-xl md:text-2xl border-2 border-transparent hover:border-brand-pink transition-all flex items-center justify-center gap-3"
             >
-                JOIN THE CULT
+                <XLogo /> JOIN THE CULT
             </motion.a>
         </div>
 

@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Sparkles } from 'lucide-react';
+import { Menu, X as CloseIcon, Sparkles } from 'lucide-react';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,6 +26,10 @@ const Navbar: React.FC = () => {
     { id: 'howtobuy', label: 'ASCEND' },
     { id: 'chart', label: 'STATS' },
   ];
+
+  const XLogo = () => (
+    <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+  );
 
   return (
     <motion.nav 
@@ -55,6 +59,11 @@ const Navbar: React.FC = () => {
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-pink group-hover:w-full transition-all" />
               </button>
             ))}
+            
+            <a href="https://x.com/themoggeronsol" target="_blank" rel="noopener noreferrer" className="text-brand-dark hover:text-brand-blue transition-colors p-2">
+                <XLogo />
+            </a>
+
             <a href="https://pump.fun/4MdtwK7ezBemvAWsW32HuvVD7o7j89Y3poYwJpWopump" target="_blank" rel="noopener noreferrer" 
                className="bg-brand-blue text-white px-8 py-2.5 rounded-full hover:scale-105 hover:shadow-[0_0_20px_rgba(46,144,250,0.5)] transition-all font-slab flex items-center gap-2">
                 <Sparkles size={16} /> BUY $MOG
@@ -62,7 +71,7 @@ const Navbar: React.FC = () => {
         </div>
 
         <button className="md:hidden text-brand-dark p-2" onClick={() => setIsOpen(!isOpen)}>
-          {isOpen ? <X size={32} /> : <Menu size={32} />}
+          {isOpen ? <CloseIcon size={32} /> : <Menu size={32} />}
         </button>
       </div>
 
@@ -74,13 +83,18 @@ const Navbar: React.FC = () => {
             exit={{ opacity: 0, x: 100 }}
             className="md:hidden fixed inset-0 bg-white z-[60] flex flex-col p-8 gap-8 items-center justify-center font-slab text-3xl text-brand-dark"
           >
-            <button className="absolute top-6 right-6" onClick={() => setIsOpen(false)}><X size={40} /></button>
+            <button className="absolute top-6 right-6" onClick={() => setIsOpen(false)}><CloseIcon size={40} /></button>
             {navLinks.map((link) => (
               <button key={link.id} onClick={() => scrollToSection(link.id)} className="rainbow-text">{link.label}</button>
             ))}
-            <a href="https://pump.fun/4MdtwK7ezBemvAWsW32HuvVD7o7j89Y3poYwJpWopump" target="_blank" rel="noopener noreferrer" className="bg-brand-blue text-white px-12 py-4 rounded-full shadow-2xl">
-                BUY NOW
-            </a>
+            <div className="flex gap-8 items-center mt-4">
+                <a href="https://x.com/themoggeronsol" target="_blank" rel="noopener noreferrer" className="text-brand-dark">
+                    <XLogo />
+                </a>
+                <a href="https://pump.fun/4MdtwK7ezBemvAWsW32HuvVD7o7j89Y3poYwJpWopump" target="_blank" rel="noopener noreferrer" className="bg-brand-blue text-white px-12 py-4 rounded-full shadow-2xl text-xl">
+                    BUY NOW
+                </a>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
