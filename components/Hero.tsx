@@ -3,7 +3,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import MogLogo from './MogLogo';
 import CopyAddress from './CopyAddress';
-import { Sparkles, Trophy, Zap } from 'lucide-react';
+import { Trophy, Zap } from 'lucide-react';
 
 const Hero: React.FC = () => {
   return (
@@ -86,19 +86,6 @@ const Hero: React.FC = () => {
         <div className="w-full max-w-xl">
             <CopyAddress />
         </div>
-      </div>
-
-      {/* Speed lines decorative element */}
-      <div className="absolute inset-0 pointer-events-none opacity-5">
-        {[...Array(20)].map((_, i) => (
-            <div key={i} className="absolute h-1 bg-brand-blue rounded-full" style={{
-                top: `${Math.random() * 100}%`,
-                left: `${Math.random() * 100}%`,
-                width: `${Math.random() * 200 + 50}px`,
-                transform: 'rotate(-45deg)',
-                animation: `float ${Math.random() * 3 + 2}s linear infinite`
-            }} />
-        ))}
       </div>
     </section>
   );
